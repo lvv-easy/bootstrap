@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body>
+<nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
+    <p class="navbar-brand col-md-3 col-lg-2 mr-0 px-3"
+       th:text="${#authentication.getPrincipal().getEmail() + ' with roles: '+ #strings.replace(#authentication.getPrincipal().authorities,'ROLE_','').replaceAll('[\[\],]','')}">
+        User Info</p>
+    <ul class="navbar-nav px-3">
+        <li class="nav-item text-nowrap">
+            <a class="nav-link" href="/logout">Logut</a>
+        </li>
+    </ul>
+</nav>
+
+<div class="container-fluid  vh-100">
+    <div class="row h-100">
+        <div class="col-2 vh-100">
+            <ul class="nav nav-pills flex-column ">
+                <li class="nav-item ">
+                    <a class="nav-link active" href="#">Admin</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link " href="#">User</a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="col-10 bg-light vh-100">
+
+            <h2 class="h2 mx-4">Add New User</h2>
+
+            <ul class="nav nav-tabs  mx-4">
+                <li class="nav-item">
+                    <a class="nav-link " href="/admin/users">User table</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" href="#">New User</a>
+                </li>
+            </ul>
+
+            <div class="jumbotron bg-white border pt-0 pb-1 px-4 mx-4">
+
+                <nav class="navbar badge-light mt-0 mb-4 mx-n4 border-bottom">
+                    <span class="navbar-brand my-0 h1 ">All users</span>
+                </nav>
+
+                <div class="row justify-content-center">
+                    <div class="col-3 justify-content-center text-center">
+                        <form th:method="post" th:action="@{/admin/users}" th:object="${user}">
+                            <div class="form-group">
+                                <label class="font-weight-bold mb-0" for="firstName">First Name: </label>
+                                <input type="text" class="form-control" th:field="*{firstName}" id="firstName">
+                                <div style="color:red" th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}">First Name
+                                    Error
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="font-weight-bold mb-0" for="lastName">Last Name: </label>
+                                <input type="text" class="form-control" th:field="*{lastName}" id="lastName">
+                                <div style="color:red" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}">
+                                    Last Name
+                                    Error
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="font-weight-bold mb-0" for="age">Age: </label>
+                                <input type="text" class="form-control" th:field="*{age}" id="age">
+                                <div style="color:red" th:if="${#fields.hasErrors('age')}" th:errors="*{age}">Age Error
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="font-weight-bold mb-0" for="email">Email: </label>
+                                <input type="text" class="form-control" th:field="*{email}" id="email">
+                                <div style="color:red" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Email
+                                    Error
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="font-weight-bold mb-0" for="password">Password: </label>
+                                <input type="password" class="form-control" th:field="*{password}" id="password">
+                                <div style="color:red" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">
+                                    Name
+                                    Error
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="font-weight-bold mb-0" for="roles">Role</label>
+                                <select multiple class="form-control" th:field="*{roles}" size="2" id="roles">
+                                    <option th:each="role : ${allRoles}"
+                                            name="roles"
+                                            th:value="${role.id} +':'+ ${role.role}"
+                                            th:text=" ${#strings.replace(role.role,'ROLE_','')}">Role</option>
+                                </select>
+                            </div>
+                            <button type="submit" class="btn btn-success mb-3">Add new User</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+</body>
+</html>
