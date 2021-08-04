@@ -10,9 +10,9 @@ import java.util.Objects;
 public class Role implements GrantedAuthority {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+    @Column(name = "id", nullable = true, unique = true)
     private Long id;
-    @Column(name = "role")
+    @Column(name = "role", nullable = true, unique = true)
     private String role;
 
     public Role() {

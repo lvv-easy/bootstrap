@@ -62,7 +62,6 @@ public class MyController {
             model.addAttribute("allRoles", roleService.getAllRoles());
             return "create";
         }
-
         userService.save(user);
         return "redirect:/admin/users";
     }
